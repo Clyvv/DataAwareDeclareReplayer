@@ -7,7 +7,7 @@ You need to follow the instructions on the installation of ProM from [ProM tools
 
 After cloning or downloading this repository, import it into Eclipse.  The application uses [Ivy](https://ant.apache.org/ivy/) for dependency management. You may also need to install that.
 
-You need start ProM from within the application in order to access out plugins.  To do that right click of the ProM with UITopia (DataAwareDeclareReplayer).launch file and select run.
+You need start ProM from within the application in order to access out plugins.  To do that right click of the ProM with UITopia (DataAwareDeclareReplayer).launch file and select Run As.
 
 ### How to use
 An event log and a data-aware Declare model are needed as input.  
