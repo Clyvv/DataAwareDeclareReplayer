@@ -1,3 +1,6 @@
+/*
+ * Mainly taken from org.processmining.plugins.balancedconformance.functions.VirtualVariableAwareWriteOperationCostWrapper
+ */
 package org.processmining.plugins.dataawaredeclarereplayer.functions;
 
 import java.util.HashMap;
@@ -7,13 +10,6 @@ import org.processmining.plugins.DataConformance.framework.WriteOperationCost;
 import org.processmining.plugins.dataawaredeclarereplayer.mapping.Variable;
 import org.processmining.plugins.dataawaredeclarereplayer.mapping.VariableAwareWriteOperationCost;
 
-/**
- * Adopted from
- * {@link org.processmining.plugins.balancedconformance.functions.VirtualVariableAwareWriteOperationCostWrapper}
- * 
- * @author C.T Mawoko
- * 
- */
 public final class VirtualVariableAwareWriteOperationCostWrapper implements VariableAwareWriteOperationCost {
 
 	private final WriteOperationCost variableCost;

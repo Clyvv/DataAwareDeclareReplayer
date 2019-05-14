@@ -1,3 +1,6 @@
+/*
+ * Adapted from org.processmining.plugins.balancedconformance.mapping.LogMapping
+ */
 package org.processmining.plugins.dataawaredeclarereplayer.mapping;
 
 import java.util.ArrayList;
@@ -38,14 +41,6 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Multimaps;
 import com.google.common.collect.SetMultimap;
 
-/**
- * All information about the {@link XLog} that is used during the Data
- * Alignment. Adopted from
- * {@link org.processmining.plugins.balancedconformance.mapping.LogMapping}
- * 
- * @author C.T Mawoko
- * 
- */
 public class LogMapping {
 
 	private final Map<String, Variable> variables = new HashMap<>();

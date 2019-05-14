@@ -54,13 +54,11 @@ public class DataAwareConformanceConfiguration {
 	private ActivityMatchCosts<XEventClass> activityCost;
 
 	private Map<ReplayableActivityDefinition, XEventClass> activityMapping;
-	
-	private Map<String, Float> maxDistance = new HashMap<String, Float>();
-	
+
 	private Map<String, Set<String>> variablesToWrite;
-	
+
 	private Map<String, Class> variableTypes = new HashMap<>();
-	
+
 	private boolean prune = true;
 
 	private DataAwareConformanceConfiguration() {
@@ -70,7 +68,8 @@ public class DataAwareConformanceConfiguration {
 	public DataAwareConformanceConfiguration(Map<String, String> variableMapping,
 			Map<ReplayableActivityDefinition, XEventClass> activityMapping,
 			ActivityMatchCosts<XEventClass> activityCost, VariableMatchCosts variableCost,
-			Map<String, Object> lowerBounds, Map<String, Object> upperBounds, Map<String, Object> defaultValues,Map<String, Float> maxDistance,Map<String, Set<String>> variablesToWrite, Map<String, Class> variableTypes) {
+			Map<String, Object> lowerBounds, Map<String, Object> upperBounds, Map<String, Object> defaultValues,
+			Map<String, Set<String>> variablesToWrite, Map<String, Class> variableTypes) {
 		super();
 		this.variableMapping = variableMapping;
 		this.variableCost = variableCost;
@@ -79,7 +78,6 @@ public class DataAwareConformanceConfiguration {
 		this.defaultValues = defaultValues;
 		this.activityCost = activityCost;
 		this.activityMapping = activityMapping;
-		this.maxDistance = maxDistance;
 		this.variablesToWrite = variablesToWrite;
 		this.variableTypes = variableTypes;
 	}
@@ -90,7 +88,6 @@ public class DataAwareConformanceConfiguration {
 		Set<String> variableNames = model.getDataVariables().keySet();
 		Set<String> attributeNames = getAttributeNames(log, eventClasses.getClassifier());
 
-		
 		Map<String, String> variableMapping = new HashMap<>();
 		if (!variableNames.isEmpty()) {
 			variableMapping = createDefaultVariableMapping(variableNames, attributeNames);
@@ -101,8 +98,8 @@ public class DataAwareConformanceConfiguration {
 
 		HashSet<ReplayableActivityDefinition> activitySet = new HashSet<ReplayableActivityDefinition>();
 		for (ActivityDefinition activity : model.getModel().getActivityDefinitions())
-			if (activity.getName()!=null && activity.getName().length()>0)
-			activitySet.add(new ReplayableActivityDefinition(activity.getName()));
+			if (activity.getName() != null && activity.getName().length() > 0)
+				activitySet.add(new ReplayableActivityDefinition(activity.getName()));
 
 		Map<ReplayableActivityDefinition, XEventClass> activityMapping = queryActivityMapping(model, activitySet,
 				eventClasses, context);
@@ -111,7 +108,7 @@ public class DataAwareConformanceConfiguration {
 		for (Entry<ReplayableActivityDefinition, XEventClass> entry : activityMapping.entrySet()) {
 			activities.put(entry.getKey(), entry.getValue());
 		}
-	
+
 		config.setVariableTypes(model.getDataVariables());
 		config.setActivityMapping(activityMapping);
 		config.setActivityCost(queryActivityCosts(config, activitySet, activityMapping, context));
@@ -142,13 +139,13 @@ public class DataAwareConformanceConfiguration {
 			}
 
 		}
-		
-		
+
 		return activityMapping;
 	}
 
 	//Activity Costs
-	private static ActivityMatchCosts<XEventClass> queryActivityCosts(DataAwareConformanceConfiguration config, HashSet<ReplayableActivityDefinition> activitySet,
+	private static ActivityMatchCosts<XEventClass> queryActivityCosts(DataAwareConformanceConfiguration config,
+			HashSet<ReplayableActivityDefinition> activitySet,
 			Map<ReplayableActivityDefinition, XEventClass> activityMapping, UIPluginContext context) {
 
 		ActivityMatchCostPanel<XEventClass> activityPanel = new ActivityMatchCostPanel<XEventClass>(activitySet,
@@ -158,7 +155,7 @@ public class DataAwareConformanceConfiguration {
 			context.getFutureResult(0).cancel(true);
 			return null;
 		}
-		
+
 		config.prune = activityPanel.specialOptionOn();
 		return activityPanel.getCosts();
 	}
@@ -195,19 +192,19 @@ public class DataAwareConformanceConfiguration {
 		}
 		return mapping;
 	}
-	
-	public static Map<String, Set<String>> queryToWrite(Map<ReplayableActivityDefinition, XEventClass> activityMapping, Set<String> variableNames,
-			XLog log) {
+
+	public static Map<String, Set<String>> queryToWrite(Map<ReplayableActivityDefinition, XEventClass> activityMapping,
+			Set<String> variableNames, XLog log) {
 		Map<String, Set<String>> variablesToWrite = new HashMap<>();
-		for(ReplayableActivityDefinition activity: activityMapping.keySet()) {
+		for (ReplayableActivityDefinition activity : activityMapping.keySet()) {
 			variablesToWrite.put(activity.getLabel(), new HashSet<>());
 		}
 		for (XTrace trace : log) {
 			for (XEvent event : trace) {
 				String activity = event.getAttributes().get("concept:name").toString();
-				if(variablesToWrite.keySet().contains(activity)) {
-					for(Entry<String, Set<String>> vars: variablesToWrite.entrySet()) {
-						if(vars.getKey().equals(activity)) {
+				if (variablesToWrite.keySet().contains(activity)) {
+					for (Entry<String, Set<String>> vars : variablesToWrite.entrySet()) {
+						if (vars.getKey().equals(activity)) {
 							for (String var : variableNames) {
 								XAttributeMap attributes = event.getAttributes();
 								XAttribute attribute = attributes.get(var);
@@ -216,10 +213,10 @@ public class DataAwareConformanceConfiguration {
 								}
 							}
 						}
-						
+
 					}
 				}
-				
+
 			}
 		}
 		return variablesToWrite;
@@ -421,14 +418,6 @@ public class DataAwareConformanceConfiguration {
 
 	public void setActivityMapping(Map<ReplayableActivityDefinition, XEventClass> activityMapping) {
 		this.activityMapping = activityMapping;
-	}
-
-	public Map<String, Float> getMaxDistance() {
-		return maxDistance;
-	}
-
-	public void setMaxDistance(Map<String, Float> maxDistance) {
-		this.maxDistance = maxDistance;
 	}
 
 	public boolean isPrune() {

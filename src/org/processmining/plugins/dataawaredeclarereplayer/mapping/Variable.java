@@ -1,16 +1,11 @@
+/*
+ * Adapted from org.processmining.plugins.balancedconformance.mapping.Variable
+ */
 package org.processmining.plugins.dataawaredeclarereplayer.mapping;
 
 
 import org.processmining.plugins.dataawaredeclarereplayer.functions.VirtualVariable;
 
-
-/**
- * Adopted from
- * {@link org.processmining.plugins.balancedconformance.mapping.Variable}
- * 
- * @author C.T Mawoko
- * 
- */
 public final class Variable {
 	public Variable(String name, Class<?> type) {
 		this.name = name.intern();

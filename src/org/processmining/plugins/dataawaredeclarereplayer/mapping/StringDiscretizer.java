@@ -1,3 +1,6 @@
+/*
+ * Adapted from org.processmining.plugins.balancedconformance.mapping.StringDiscretizer
+ */
 package org.processmining.plugins.dataawaredeclarereplayer.mapping;
 
 import java.util.Set;

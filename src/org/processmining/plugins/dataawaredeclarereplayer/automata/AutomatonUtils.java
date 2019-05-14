@@ -1,3 +1,6 @@
+/*
+ * Adapted from org.processmining.plugins.declareminer.AutomatonUtils
+ */
 package org.processmining.plugins.dataawaredeclarereplayer.automata;
 
 import java.util.ArrayList;

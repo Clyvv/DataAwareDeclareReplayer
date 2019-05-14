@@ -1,3 +1,4 @@
+
 package org.processmining.plugins.dataawaredeclarereplayer.gui;
 
 import java.awt.Dimension;

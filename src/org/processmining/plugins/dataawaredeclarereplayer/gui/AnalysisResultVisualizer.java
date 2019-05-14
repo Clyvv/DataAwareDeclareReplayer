@@ -1,3 +1,6 @@
+/*
+ * Adapted from org.processmining.plugins.declareanalyzer.gui.AnalysisResultVisualizer
+ */
 package org.processmining.plugins.dataawaredeclarereplayer.gui;
 
 import java.awt.BorderLayout;
@@ -42,7 +45,7 @@ import org.processmining.framework.util.ui.widgets.ProMList;
 import org.processmining.framework.util.ui.widgets.ProMScrollPane;
 import org.processmining.framework.util.ui.widgets.WidgetColors;
 import org.processmining.plugins.DataConformance.Alignment;
-import org.processmining.plugins.dataawaredeclarereplayer.result.AnalysisResult;
+import org.processmining.plugins.dataawaredeclarereplayer.result.AlignmentAnalysisResult;
 import org.processmining.plugins.dataawaredeclarereplayer.utils.GUIUtils;
 import org.processmining.plugins.declareanalyzer.gui.widget.MultilineListEntry;
 import org.processmining.plugins.declareanalyzer.gui.widget.MultilineListEntryRenderer;
@@ -67,7 +70,7 @@ public class AnalysisResultVisualizer extends SlickerTabbedPane {
 		});
 	}
 	
-	private AnalysisResult result;
+	private AlignmentAnalysisResult result;
 	private String filter;
 	
 	private DefaultListModel caseIdsListModel = new DefaultListModel();
@@ -98,7 +101,7 @@ public class AnalysisResultVisualizer extends SlickerTabbedPane {
 		affiliation = "UniTartu"
 	)
 	@Visualizer(name = "Alignment Result Visualizer")
-	public JComponent visualize(UIPluginContext context, AnalysisResult result) {
+	public JComponent visualize(UIPluginContext context, AlignmentAnalysisResult result) {
 		this.result = result;
 		this.filter = "";
 		

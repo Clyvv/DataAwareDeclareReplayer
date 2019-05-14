@@ -1,3 +1,6 @@
+/*
+ * Adapted from org.processmining.plugins.DataConformance.DataAlignment.SingleTraceDataAlignmentBuilder
+ */
 package org.processmining.plugins.dataawaredeclarereplayer;
 
 import java.text.ParseException;
@@ -37,9 +40,9 @@ import net.sf.javailp.VarType;
 public class SingleTraceDataAlignmentBuilder {
 
 	private static final char WRITE_CHAR = '\'';
-	private static final double EPSILON = 0.500;
-	private static final double MAX_VALUE = 100000.0; // Should not be too big, otherwise introduces errors in lp_solve
-	private static final double LP_SOLVE_PRECISION = 0.000001;
+	private static final double EPSILON = 0.5;
+	private static final double MAX_VALUE = 10000000.0; // Should not be too big, otherwise introduces errors in lp_solve
+	private static final double LP_SOLVE_PRECISION = 0.00000001;
 	private static int numBooleanVar = 0;
 	private static StringDiscretizer stringDiscretizer;
 

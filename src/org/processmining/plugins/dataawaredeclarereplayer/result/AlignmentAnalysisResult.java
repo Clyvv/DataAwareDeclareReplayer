@@ -16,7 +16,7 @@ import org.processmining.plugins.dataawaredeclarereplayer.gui.AnalysisSingleResu
  * @author Clive Tinashe Mawoko
  */
 @AuthoredType(typeName = "Data Aware Declare Alignment Result", author = "Clive T Mawoko", email = "clive.tinashe.mawoko@ut.ee", affiliation = "University of Tartu")
-public class AnalysisResult {
+public class AlignmentAnalysisResult {
 
 	private final int traceCount;
 	private final int numberOfConstraints;
@@ -25,7 +25,7 @@ public class AnalysisResult {
 	/* counters detailed per trace */
 	private Map<Alignment, Set<AnalysisSingleResult>> detailedResults = new HashMap<Alignment, Set<AnalysisSingleResult>>();
 
-	public AnalysisResult(int traceCount, int numberOfConstraints, long computationTime) {
+	public AlignmentAnalysisResult(int traceCount, int numberOfConstraints, long computationTime) {
 		this.traceCount = traceCount;
 		this.numberOfConstraints = numberOfConstraints;
 		this.computationTime = computationTime;

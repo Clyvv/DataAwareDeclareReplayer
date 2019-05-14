@@ -1,3 +1,6 @@
+/*
+ * Adapted from org.processmining.plugins.declareanalyzer.gui.SingleResultVisualizer
+ */
 package org.processmining.plugins.dataawaredeclarereplayer.gui;
 
 import java.awt.BasicStroke;

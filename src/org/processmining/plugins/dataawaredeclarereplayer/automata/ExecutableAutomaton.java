@@ -1,3 +1,6 @@
+/*
+ * Adapted from org.processmining.plugins.declareminer.ExecutableAutomaton
+ */
 package org.processmining.plugins.dataawaredeclarereplayer.automata;
 
 import java.util.ArrayList;
@@ -10,26 +13,6 @@ import org.processmining.ltl2automaton.plugins.automaton.Automaton;
 import org.processmining.ltl2automaton.plugins.automaton.State;
 import org.processmining.ltl2automaton.plugins.automaton.Transition;
 
-/**
- * <p>
- * Title: DECLARE
- * </p>
- * 
- * <p>
- * Description:
- * </p>
- * 
- * <p>
- * Copyright: Copyright (c) 2006
- * </p>
- * 
- * <p>
- * Company: TU/e
- * </p>
- * 
- * @author Maja Pesic
- * @version 1.0
- */
 public class ExecutableAutomaton {
 	private Automaton graph;
 
@@ -53,6 +36,7 @@ public class ExecutableAutomaton {
 		return current;
 	}
 
+	//Added to always accept invisible activities
 	public PossibleNodes next(String label, boolean invisible) {
 		if (current != null) {
 			if (!invisible) {

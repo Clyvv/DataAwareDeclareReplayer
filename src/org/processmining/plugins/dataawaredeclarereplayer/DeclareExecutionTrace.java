@@ -1,3 +1,6 @@
+/*
+ * Adapted from org.processmining.plugins.DeclareConformance.DeclareExecutionTrace
+ */
 package org.processmining.plugins.dataawaredeclarereplayer;
 
 import java.util.ArrayList;
@@ -231,11 +234,6 @@ public class DeclareExecutionTrace extends ExecutionTrace {
 				currentF = currentF.replace("_O", "X");
 				currentF = currentF.replace("U_", "U");
 				forms[i] = currentF;
-				//	if (i != (forms.length - 1)) {
-				//		formula = formula + currentF + ")&&(";
-				//	} else {
-				//		formula = formula + currentF + ")";
-				//	}
 				List<Formula> formulaeParsed = new ArrayList<Formula>();
 				formulaeParsed.add(new DefaultParser(forms[i]).parse());
 				TreeFactory<ConjunctionTreeNode, ConjunctionTreeLeaf> treeFactory = DefaultTreeFactory.getInstance();

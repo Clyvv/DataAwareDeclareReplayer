@@ -1,3 +1,6 @@
+/*
+ * Adapted from org.processmining.plugins.DataConformance.framework.ReplayingHelper
+ */
 package org.processmining.plugins.dataawaredeclarereplayer;
 
 import java.text.ParseException;
@@ -39,7 +42,6 @@ public class DataReplayingHelper {
 	DataAwareDeclare model;
 	ActivityMatchCosts activityMatchCosts;
 	VariableMatchCosts variableMatchCosts;
-	Map<String, Float> maxDistance;
 	Map<String, Set<String>> variablesToWrite;
 	Map<String, Object> lowerBounds;
 	Map<String, Object> upperBounds;
@@ -48,10 +50,9 @@ public class DataReplayingHelper {
 
 	public DataReplayingHelper(DataAwareDeclare model, XTrace trace,
 			Map<ReplayableActivity, XEventClass> activityMapping, Map<String, String> variableMapping,
-			XEventClasses eventClasses, Map<String, Float> maxDistance, ActivityMatchCosts activityCosts,
-			VariableMatchCosts variableCosts, Map<String, Set<String>> variablesToWrite,
-			Map<String, Object> lowerBounds, Map<String, Object> upperBounds, Map<String, Class> variableTypes,
-			StringDiscretizer stringDiscretizer) {
+			XEventClasses eventClasses, ActivityMatchCosts activityCosts, VariableMatchCosts variableCosts,
+			Map<String, Set<String>> variablesToWrite, Map<String, Object> lowerBounds, Map<String, Object> upperBounds,
+			Map<String, Class> variableTypes, StringDiscretizer stringDiscretizer) {
 		this.model = model;
 		this.trace = trace;
 		this.activityMapping = activityMapping;
@@ -59,7 +60,6 @@ public class DataReplayingHelper {
 		this.eventClasses = eventClasses;
 		this.activityMatchCosts = activityCosts;
 		this.variableMatchCosts = variableCosts;
-		this.maxDistance = maxDistance;
 		this.variablesToWrite = variablesToWrite;
 		this.lowerBounds = lowerBounds;
 		this.upperBounds = upperBounds;
@@ -97,7 +97,6 @@ public class DataReplayingHelper {
 
 			for (ExecutionTrace extendedProcessPrefix : extendedProcessPrefixes) {
 				//Move in the log + Move in the process
-				//If lastLogStep==ExecutionStep.tauStep, then it's Not move in the log + Move in the process
 				DataAlignmentState state = new DataAlignmentState(extendedLogPrefix, extendedProcessPrefix, 0);
 				successors.add(state);
 			}
@@ -154,7 +153,7 @@ public class DataReplayingHelper {
 						float distance = org.processmining.plugins.DataConformance.Utility
 								.stringDistance((String) processValue, logValueAsString);
 						if (distance > 0)
-							cost += variableMatchCosts.costFaultyValue(activity, var);//maxDistance.get(var)*distance;
+							cost += variableMatchCosts.costFaultyValue(activity, var);
 					} else if (processValue instanceof Number) {
 						float logValueAsFloat;
 						if (logValue instanceof String)
@@ -163,7 +162,7 @@ public class DataReplayingHelper {
 							logValueAsFloat = ((Number) logValue).floatValue();
 						float distance = Math.abs(((Number) processValue).floatValue() - logValueAsFloat);
 						if (distance > 0)
-							cost += variableMatchCosts.costFaultyValue(activity, var);//maxDistance.get(var)*distance;					
+							cost += variableMatchCosts.costFaultyValue(activity, var);				
 					} else if (!processValue.equals(logValue)) {
 						cost += variableMatchCosts.costFaultyValue(activity, var);
 					}
@@ -255,6 +254,7 @@ public class DataReplayingHelper {
 			}
 			DataAlignmentState augmented = SingleTraceDataAlignmentBuilder.createAlignment(list, variableMatchCosts,
 					variableTypes, upperBounds, lowerBounds);
+			//Gather variable assignments
 			i = 0;
 			for (ExecutionStep step : state.processTracePrefix) {
 				ExecutionStep logStep = (ExecutionStep) state.logTracePrefix.get(i);

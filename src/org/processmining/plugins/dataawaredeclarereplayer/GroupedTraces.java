@@ -1,8 +1,10 @@
+/*
+ * Mainly taken from org.processmining.plugins.balancedconformance.functions.VirtualVariable
+ */
 package org.processmining.plugins.dataawaredeclarereplayer;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,11 +18,9 @@ import org.deckfour.xes.model.XEvent;
 import org.deckfour.xes.model.XLog;
 import org.deckfour.xes.model.XTrace;
 import org.deckfour.xes.model.impl.XAttributeMapImpl;
-import org.deckfour.xes.model.impl.XAttributeTimestampImpl;
 import org.deckfour.xes.model.impl.XTraceImpl;
 import org.processmining.log.utils.XUtils;
 import org.processmining.plugins.DeclareConformance.ReplayableActivityDefinition;
-import org.processmining.plugins.balancedconformance.functions.VirtualVariable;
 import org.processmining.plugins.balancedconformance.result.BalancedDataAlignmentState;
 import org.processmining.plugins.dataawaredeclarereplayer.mapping.LogMapping;
 import org.processmining.plugins.dataawaredeclarereplayer.mapping.Variable;
@@ -86,19 +86,6 @@ final class GroupedTraces {
 
 	}
 
-	private static Date findStartTimeOfMappedTrace(LogMapping logMapping, XTrace trace) {
-		for (XEvent event : trace) {
-			if (!logMapping.getMappedTransitions(event).isEmpty()) {
-				Date startTime = XUtils.getTimestamp(event);
-				if (startTime != null) {
-					return startTime;
-				}
-			}
-		}
-		// trace without time information
-		return null;
-	}
-
 	interface GroupedTrace {
 
 		XTrace getRepresentativeTrace();
@@ -113,11 +100,7 @@ final class GroupedTraces {
 
 		public GroupedXTrace(XTrace trace, LogMapping logMapping,
 				Map<String, SortedSet<String>> consideredAttributesMap) {
-			if (logMapping.hasVirtualVariables()) {
-				//TODO only if relative time is needed & only consider relative time for grouping but avoid adding relative time
-				addRelativeTime(trace, logMapping);
-			}
-
+			
 			this.traceWithoutUnmapped = new XTraceImpl(new XAttributeMapImpl());
 			AbstractedEvent[] tempTrace = new AbstractedEvent[trace.size()];
 			int i = 0;
@@ -137,20 +120,6 @@ final class GroupedTraces {
 			}
 			abstractTrace = Arrays.copyOf(tempTrace, i);
 			hashCode = Arrays.hashCode(abstractTrace);
-		}
-
-		private void addRelativeTime(XTrace trace, LogMapping logMapping) {
-			for (XEvent event : trace) {
-				if (!logMapping.getMappedTransitions(event).isEmpty()) {
-					Date startTime = findStartTimeOfMappedTrace(logMapping, trace);
-					Date currentTime = XUtils.getTimestamp(event);
-					if (currentTime != null && startTime != null) {
-						XUtils.putAttribute(event,
-								new XAttributeTimestampImpl(VirtualVariable.ATTRIBUTE_KEY_RELATIVE_TIME,
-										currentTime.getTime() - startTime.getTime()));
-					}
-				}
-			}
 		}
 
 		public XTrace getRepresentativeTrace() {

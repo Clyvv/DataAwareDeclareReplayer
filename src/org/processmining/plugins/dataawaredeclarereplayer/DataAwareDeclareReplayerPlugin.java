@@ -11,7 +11,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 import org.deckfour.xes.classification.XEventClass;
 import org.deckfour.xes.classification.XEventClasses;
@@ -32,27 +31,24 @@ import org.processmining.plugins.DataConformance.framework.VariableMatchCosts;
 import org.processmining.plugins.DataConformance.visualization.DataAwareStepTypes;
 import org.processmining.plugins.dataawaredeclarereplayer.mapping.LogMapping;
 import org.processmining.plugins.dataawaredeclarereplayer.result.AlignmentResult;
-import org.processmining.plugins.dataawaredeclarereplayer.result.AnalysisResult;
+import org.processmining.plugins.dataawaredeclarereplayer.result.AlignmentAnalysisResult;
 import org.processmining.plugins.declareminer.visualizing.DeclareMap;
 
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.Lists;
 
 /**
- * Class with the Declare Aware Declare Replayer plugin
+ * Class with the Data Aware Declare Replayer plugin
  * 
  * @author Clive Tinashe Mawoko
  */
 public class DataAwareDeclareReplayerPlugin {
 
-	@Plugin(name = "Data Aware Declare Replayer", 
-			parameterLabels = { "An event log", "A Declare model with data" }, 
-			returnLabels = { "Data Aware Declare Alignment Result" }, 
-			returnTypes = { AnalysisResult.class }, 
-			userAccessible = true, 
-			help = "Conformance checking of a declare model with data with regard to an event log.")
+	@Plugin(name = "Data Aware Declare Replayer", parameterLabels = { "An event log",
+			"A Declare model with data" }, returnLabels = { "Data Aware Declare Alignment Result" }, returnTypes = {
+					AlignmentAnalysisResult.class }, userAccessible = true, help = "Conformance checking of a declare model with data with regard to an event log.")
 	@UITopiaVariant(affiliation = "University of Tartu", author = "Clive T Mawoko", email = "clive.tinashe.mawoko@ut.ee")
-	public static AnalysisResult run(UIPluginContext context, XLog log, DeclareMap dmap) throws Exception {
+	public static AlignmentAnalysisResult run(UIPluginContext context, XLog log, DeclareMap dmap) throws Exception {
 
 		DataAwareDeclare model = new DataAwareDeclare(dmap);
 		XLogInfo summary = XLogInfoFactory.createLogInfo(log);
@@ -64,24 +60,22 @@ public class DataAwareDeclareReplayerPlugin {
 		progBar.setMinimum(0);
 		progBar.setMaximum(log.size());
 		progBar.setValue(0);
-		
-		ExecutorService service = Executors.newSingleThreadExecutor();
 
-		
+		ExecutorService service = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+
 		final LogMapping logMapping = new LogMapping(config, model, log);
 
 		final GroupedTraces groupedTraces = createGroupedTraces(progBar, log, logMapping, context);
 
-		
 		Collection<DataAlignmentState> list = new ArrayList<>();
 		try {
 			Callable<Collection<DataAlignmentState>> callable = new Callable<Collection<DataAlignmentState>>() {
 				public Collection<DataAlignmentState> call() throws Exception {
 					Collection<DataAlignmentState> list = MultiThreadDeclareConformanceChecking.perform(model,
 							config.getActivityMapping(), config.getVariableMapping(), eventClasses, groupedTraces,
-							config.getActivityCost(), config.getVariableCost(), config.getMaxDistance(), context,
-							config.isPrune(), config.getVariablesToWrite(), config.getLowerBounds(),
-							config.getUpperBounds(), config.getVariableTypes(), logMapping.getStringDiscretizer());
+							config.getActivityCost(), config.getVariableCost(), context, config.isPrune(),
+							config.getVariablesToWrite(), config.getLowerBounds(), config.getUpperBounds(),
+							config.getVariableTypes(), logMapping.getStringDiscretizer());
 
 					return list;
 				}
@@ -90,7 +84,7 @@ public class DataAwareDeclareReplayerPlugin {
 			Future<Collection<DataAlignmentState>> future = service.submit(callable);
 
 			long beforeTime = System.currentTimeMillis();
-			list = future.get(1, TimeUnit.HOURS); // attempt replaying in 1 hour
+			list = future.get();
 			long afterTime = System.currentTimeMillis();
 
 			context.log("Computation time:" + (afterTime - beforeTime));
@@ -107,10 +101,8 @@ public class DataAwareDeclareReplayerPlugin {
 					config.getVariableCost(), config.getVariableMapping(), model, log, groupedTraces,
 					new XEventNameClassifier(), context);
 			return prepareAnalysisResult(alignmentResult, model, log, (afterTime - beforeTime));
-		} catch (final TimeoutException e) {
-			Thread.currentThread().interrupt();
+		} finally {
 			service.shutdown();
-			throw new Exception("Time out");
 		}
 	}
 
@@ -178,10 +170,10 @@ public class DataAwareDeclareReplayerPlugin {
 		return new AlignmentResult(result, activityCost, variableCost, variableMapping, model, log, classifier);
 	}
 
-	private static AnalysisResult prepareAnalysisResult(AlignmentResult alignmentResult, DataAwareDeclare model,
+	private static AlignmentAnalysisResult prepareAnalysisResult(AlignmentResult alignmentResult, DataAwareDeclare model,
 			XLog log, long computationTime) {
 
-		AnalysisResult result = new AnalysisResult(log.size(), model.getModel().constraintDefinitionsCount(),
+		AlignmentAnalysisResult result = new AlignmentAnalysisResult(log.size(), model.getModel().constraintDefinitionsCount(),
 				computationTime);
 
 		for (Alignment alignment : alignmentResult.getAlignments()) {

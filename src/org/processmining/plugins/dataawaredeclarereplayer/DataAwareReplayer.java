@@ -1,3 +1,6 @@
+/*
+ * Adapted from org.processmining.plugins.DataConformance.framework.DataReplayer
+ */
 package org.processmining.plugins.dataawaredeclarereplayer;
 
 import java.text.ParseException;
@@ -39,17 +42,16 @@ public class DataAwareReplayer extends Thread {
 
 	public DataAwareReplayer(DataAwareDeclare model, Map<ReplayableActivity, XEventClass> activityMapping,
 			Map<String, String> variableMapping, XEventClasses eventClasses, XTrace trace,
-			ActivityMatchCosts activityCost, VariableMatchCosts variableCost, Map<String, Float> maxDistance,
-			HashSet<DataAlignmentState> list, UIPluginContext context, boolean prune,
-			Map<String, Set<String>> variablesToWrite, Map<String, Object> lowerBounds, Map<String, Object> upperBounds,
-			Map<String, Class> variableTypes, StringDiscretizer stringDiscretizer) {
+			ActivityMatchCosts activityCost, VariableMatchCosts variableCost, HashSet<DataAlignmentState> list,
+			UIPluginContext context, boolean prune, Map<String, Set<String>> variablesToWrite,
+			Map<String, Object> lowerBounds, Map<String, Object> upperBounds, Map<String, Class> variableTypes,
+			StringDiscretizer stringDiscretizer) {
 		this.model = model;
 		this.trace = trace;
 		this.list = list;
 		this.bar = context;
-		helper = new DataReplayingHelper(model, trace, activityMapping, variableMapping, eventClasses, maxDistance,
-				activityCost, variableCost, variablesToWrite, lowerBounds, upperBounds, variableTypes,
-				stringDiscretizer);
+		helper = new DataReplayingHelper(model, trace, activityMapping, variableMapping, eventClasses, activityCost,
+				variableCost, variablesToWrite, lowerBounds, upperBounds, variableTypes, stringDiscretizer);
 		this.prune = prune;
 	}
 

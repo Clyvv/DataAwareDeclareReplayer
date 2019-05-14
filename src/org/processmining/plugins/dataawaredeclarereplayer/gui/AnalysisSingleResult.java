@@ -1,3 +1,6 @@
+/*
+ * Adapted from org.processmining.plugins.declareminer.PossibleNodes
+ */
 package org.processmining.plugins.dataawaredeclarereplayer.gui;
 
 import java.util.HashSet;
@@ -13,14 +16,7 @@ public class AnalysisSingleResult implements Comparable<AnalysisSingleResult> {
 	private Set<Integer> movesInLog = new HashSet<Integer>();
 	private Set<Integer> movesInModel = new HashSet<Integer>();
 
-	/**
-	 * 
-	 * @param constraint
-	 * @param trace
-	 * @param activations
-	 * @param violations
-	 * @param fulfilments
-	 */
+
 	public AnalysisSingleResult(Alignment alignment, Set<Integer> movesInBoth, Set<Integer> movesInBothDiffData,
 			Set<Integer> movesInLog, Set<Integer> movesInModel) {
 		this.alignment = alignment;
