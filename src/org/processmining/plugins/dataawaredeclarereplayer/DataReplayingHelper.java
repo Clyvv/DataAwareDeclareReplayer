@@ -1,6 +1,3 @@
-/*
- * Adapted from org.processmining.plugins.DataConformance.framework.ReplayingHelper
- */
 package org.processmining.plugins.dataawaredeclarereplayer;
 
 import java.text.ParseException;

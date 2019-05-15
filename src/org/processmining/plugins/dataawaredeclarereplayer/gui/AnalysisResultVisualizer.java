@@ -1,6 +1,3 @@
-/*
- * Adapted from org.processmining.plugins.declareanalyzer.gui.AnalysisResultVisualizer
- */
 package org.processmining.plugins.dataawaredeclarereplayer.gui;
 
 import java.awt.BorderLayout;

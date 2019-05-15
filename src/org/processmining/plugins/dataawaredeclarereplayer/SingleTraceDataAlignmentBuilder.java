@@ -1,6 +1,3 @@
-/*
- * Adapted from org.processmining.plugins.DataConformance.DataAlignment.SingleTraceDataAlignmentBuilder
- */
 package org.processmining.plugins.dataawaredeclarereplayer;
 
 import java.text.ParseException;

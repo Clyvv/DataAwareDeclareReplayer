@@ -1,6 +1,3 @@
-/*
- * Adapted from org.processmining.plugins.balancedconformance.mapping.LogMapping
- */
 package org.processmining.plugins.dataawaredeclarereplayer.mapping;
 
 import java.util.ArrayList;

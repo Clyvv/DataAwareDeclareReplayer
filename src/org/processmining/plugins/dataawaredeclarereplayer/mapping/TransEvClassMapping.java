@@ -1,6 +1,3 @@
-/*
- * Adapted from org.processmining.plugins.connectionfactories.logpetrinet.TransEvClassMapping
- */
 package org.processmining.plugins.dataawaredeclarereplayer.mapping;
 
 import java.util.HashMap;

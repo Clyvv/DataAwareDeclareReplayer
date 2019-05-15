@@ -1,6 +1,3 @@
-/*
- * Adapted from org.processmining.plugins.declareminer.PossibleNodes
- */
 package org.processmining.plugins.dataawaredeclarereplayer.gui;
 
 import java.util.HashSet;

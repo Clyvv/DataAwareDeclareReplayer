@@ -1,6 +1,3 @@
-/*
- * Adapted from org.processmining.plugins.DeclareConformance.DeclareExecutionTrace
- */
 package org.processmining.plugins.dataawaredeclarereplayer;
 
 import java.util.ArrayList;

@@ -1,6 +1,3 @@
-/*
- * Mainly taken from org.processmining.plugins.balancedconformance.functions.VirtualVariable
- */
 package org.processmining.plugins.dataawaredeclarereplayer;
 
 import java.util.Arrays;

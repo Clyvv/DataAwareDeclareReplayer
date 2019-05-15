@@ -1,6 +1,3 @@
-/*
- * Adapted from org.processmining.plugins.balancedconformance.mapping.Variable
- */
 package org.processmining.plugins.dataawaredeclarereplayer.mapping;
 
 

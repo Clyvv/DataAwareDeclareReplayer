@@ -1,6 +1,4 @@
-/*
- * Adapted from org.processmining.plugins.balancedconformance.mapping.StringDiscretizerImpl
- */
+
 package org.processmining.plugins.dataawaredeclarereplayer.mapping;
 
 import java.util.Collection;

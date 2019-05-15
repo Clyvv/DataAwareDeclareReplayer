@@ -1,6 +1,3 @@
-/*
- * Adapted from org.processmining.plugins.balancedconformance.mapping.VariableAwareWriteOperationCost
- */
 package org.processmining.plugins.dataawaredeclarereplayer.mapping;
 
 import org.processmining.plugins.DataConformance.framework.WriteOperationCost;
