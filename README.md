@@ -11,6 +11,6 @@ You need start ProM from within the application in order to access our plugins. 
 
 ### How to use
 An event log and a data-aware Declare model are needed as input.  
-- An event log can be imported using the first tab.  
-- Use the Simple Declare Designer (another ProM plugin) to create a data-aware Declare model.  This can be found in the middle tab and does not take any input.
+- An event log can be imported using the first tab of ProM.  
+- Use the Simple Declare Designer (another ProM plugin) to create a data-aware Declare model.  This can be found in the middle tab of ProM.
 - In the middle tab of ProM, select the Data Aware Declare Replayer plugin, add the above inputs and press start.
