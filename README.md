@@ -7,10 +7,10 @@ You need to follow the instructions on the installation of ProM from [ProM tools
 
 After cloning or downloading this repository, import it into Eclipse.  The application uses [Ivy](https://ant.apache.org/ivy/) for dependency management. You may also need to install that.
 
-You need start ProM from within the application in order to access out plugins.  To do that right click of the ProM with UITopia (DataAwareDeclareReplayer).launch file and select Run As.
+You need start ProM from within the application in order to access our plugins.  To do that, right click on the ProM with UITopia (DataAwareDeclareReplayer).launch file and select Run As.
 
 ### How to use
 An event log and a data-aware Declare model are needed as input.  
-- An event log can be imported in the first tab.  
+- An event log can be imported using the first tab.  
 - Use the Simple Declare Designer (another ProM plugin) to create a data-aware Declare model.  This can be found in the middle tab and does not take any input.
 - In the middle table of the ProM framework, select the Data Aware Declare Replayer plugin, add the above inputs and press start.
