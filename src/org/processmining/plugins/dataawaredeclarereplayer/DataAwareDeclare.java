@@ -34,8 +34,17 @@ public class DataAwareDeclare extends ReplayableDeclare {
 			condition = condition.replace("A.", "");
 			if (conditionValid && condition != null && condition.length() > 0) {
 				expressions.add(new Expression(condition));
+				condition = condition.startsWith("(")?condition:"(" + condition+ ")";
 				for (ActivityDefinition a : cd.getBranches(cd.getFirstParameter())) {
-					guards.put(a.getName(), condition);
+					if(guards.containsKey(a.getName())) {
+						
+						guards.put(a.getName(),  guards.get(a.getName()) + "||" + condition );
+					}else {
+						
+							guards.put(a.getName(), condition);
+						
+					}
+					
 				}
 
 			}
