@@ -221,7 +221,7 @@ public class SingleResultVisualizer extends JPanel implements MouseMotionListene
 				g2d.setFont(activityNameFont);
 				g2d.setColor(GUIUtils.eventDetailsColor);
 				if (isMoveInBoth) {
-					g2d.drawString("This is a move in log and model",
+					g2d.drawString("This is a move in log and model!",
 							MARGIN + NUMBER_WIDTH + BOX_WIDTH + 15 + BOX_PADDING,
 							boxY + BOX_PADDING + activityNameFontMetrics.getHeight());
 				} else if (isMoveInBothDiffData) {
