@@ -164,7 +164,6 @@ public class StringDiscretizerImpl implements StringDiscretizer {
 			if (newVal != oldVal) {
 				while (newVal <= 1 || newVal == oldVal || newVal >= maxIndex) {
 					newVal = (int) (Math.random() * (maxIndex - 1)) + 1;
-					System.out.println(newVal);
 				}
 			}
 		} else {
