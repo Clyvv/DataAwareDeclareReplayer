@@ -179,8 +179,13 @@ public class SingleTraceDataAlignmentBuilder {
 								processValue = logValue;
 						}
 						if (varType.get(processVariable) == String.class) {
+							if(logValue!=0) {
 							processStep.put(processVariable,
 									stringDiscretizer.convertToString(processValue.intValue(), (int)logValue));
+							}else {
+								processStep.put(processVariable,
+										stringDiscretizer.convertToString(processValue.intValue()));
+							}
 						} else {
 							processStep.put(processVariable, org.processmining.models.guards.NumericValueConversion
 									.fromNumericValue(processValue.doubleValue(), varType.get(processVariable)));
